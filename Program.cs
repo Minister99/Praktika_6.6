@@ -71,7 +71,6 @@ namespace Praktika_6._6
             }
             Console.WriteLine("Данные сотрудника успешно добавлены");
             
-            id++;
         }
 
         static void DataOutput()
