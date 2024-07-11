@@ -7,46 +7,47 @@ namespace Praktika_6._6
     {
         static void Main(string[] args)
         {
-            LaunchingProgram();
+            LaunchingApplication();
         }
 
-        static void LaunchingProgram()
+        static void LaunchingApplication()
         {
-            while (true)
+            while (true) 
             {
-                Console.WriteLine("Выберите действие");
-                Console.WriteLine("1 - просмотр базы даных");
-                Console.WriteLine("2 - добавления данных сотрудника");
-                Console.WriteLine("0 - Закрыть програму");
+                Console.WriteLine("Выберите команду");
+                Console.WriteLine("0 - закрыть програму");
+                Console.WriteLine("1 - запись данных");
+                Console.WriteLine("2 - показать информацию о работниках");
+                string teamSelection = Console.ReadLine();
 
-                string selectAction = Console.ReadLine();
-                switch (selectAction)
+                switch (teamSelection) 
                 {
                     case "0":
-                        Console.WriteLine("База данных закрыта");
+                        Console.WriteLine("Програма закрыта");
                         return;
                     case "1":
-                        DataOutput();
-                        break;
-                    case "2":
                         DataInput();
                         break;
+                    case "2":
+                        case "3":
+                        DataOutput();
+                        break;
                     default:
-                        Console.WriteLine("Вы ввели невеное значение");
+                        Console.WriteLine("Не верно выбрана команда");
                         break;
                 }
-
             }
         }
 
-        static void DataInput()
+        static void DataInput() 
         {
-            int id = 1;
+            Console.WriteLine("Введите данные работника");
 
-            Console.WriteLine("Введите даные сотрудника");
+            Console.WriteLine("Присвойте сотрутнику ID");
+            string id = Console.ReadLine();
 
             string dataTime = DateTime.Now.ToString();
-            Console.WriteLine($"Время добавления записи: {dataTime}");
+            Console.WriteLine($"Дата и время добавления данных: {dataTime}");
 
             Console.WriteLine("Ф.И.О");
             string fulName = Console.ReadLine();
@@ -57,40 +58,29 @@ namespace Praktika_6._6
             Console.WriteLine("Рост");
             string height = Console.ReadLine();
 
-            Console.WriteLine("Дата рождения формат (дд.мм.гггг)");
+            Console.WriteLine("Дата рождения формат: (дд.мм.гггг)");
             string dateBirth = Console.ReadLine();
 
             Console.WriteLine("Место рождения");
             string placeBirth = Console.ReadLine();
 
             string record = $"#{id}#{dataTime}#{fulName}#{age}#{height}#{dateBirth}#{placeBirth}";
-            
-            using (StreamWriter streamWriter = new StreamWriter("dataInput.txt", true))
+
+            using (StreamWriter streamWriter = new StreamWriter("data.txt", true))
             {
                 streamWriter.WriteLine(record);
             }
-            Console.WriteLine("Данные сотрудника успешно добавлены");
-            
         }
 
         static void DataOutput()
         {
-            if(File.Exists("dataInput.txt"))
-            {
-                string[] lins = File.ReadAllLines("dataInput.txt");
+            Console.WriteLine("");
+            string[] lines = File.ReadAllLines("data.txt");
 
-                foreach (string line in lins) 
-                {
-                    Console.WriteLine($"{line.Replace("#","\t" )}");
-                }
-            }
-
-            else 
+            foreach (string line in lines) 
             {
-                Console.WriteLine("Файл не найдет");
+                Console.WriteLine(line.Replace("#", "  "));
             }
         }
-
-
     }
 }
